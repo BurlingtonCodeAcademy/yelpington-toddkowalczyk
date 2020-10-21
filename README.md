@@ -1,29 +1,30 @@
 # Yelpington: App
 
-In this project, you will pair up and work with other teams to create an online directory of restaurants in Burlington.
+In this project, you will create an online directory of restaurants in Burlington.
 
 # Screenshot
 
-![bob's yelpington screenshot](yelpington-screenshot.png)
+![bob's yelpington screenshot](/images/yelpington-screenshot.png)
 
 # Tech
 
+* ExpressJS
 * JSON
 * AJAX
-* Maps
-* Accessing and parsing URLs from JavaScript
+* Leaflet Maps
 
 ## Goals
 
 learn how to...
 
-* structure data in JSON files
+* serve JSON files from a server
 * load JSON files into a JavaScript app
-* display embedded maps on a web page
+* parse JSON files, and display data on a web page.
+* display, and manipulate embedded maps on a web page
 
 ## Design
 
-As specified in the [Yelpington Repo](./yelpington_repo) project, we will need JSON formatted like this:
+You should set up an API endpoint for serving JSON files with restaurant data that is structured like so:
 
 ```json
 {
@@ -39,6 +40,20 @@ As specified in the [Yelpington Repo](./yelpington_repo) project, we will need J
 }
 ```
 
+This endpoint should also hold a directory of restaurant IDs formatted like so:
+
+```json
+[
+  "joes-diner",
+  "american-flatbread",
+  "kountry-kart-deli",
+  .
+  .
+  .
+
+]
+```
+
 **Note** that we are defining our own *id* format; its rules are:
 
 * contents are the same as the base file name, except:
@@ -47,63 +62,95 @@ As specified in the [Yelpington Repo](./yelpington_repo) project, we will need J
 * kebab-case
 
 This *id* is **not** the same as an HTML element id; instead, it's a *primary key* for our
-database. (Yes, in this context, the filesystem is a database. Really.) Every record (restaurant)
+database. (Yes, in this context, the API is a database.) Every record (restaurant)
 needs a unique identifier.
 
-We will also need a file named `all.json` which contains a list of all the ids, e.g.:
-
-```
-[
-    "joes-diner",
-    "burger-queen",
-    "pizza-shack"
-]
-```
-
-
-## Backlog
+# Stories
 
 <!--BOX-->
 
-### Zero Pull Requests
+## Create a Server
 
-* If you previously did the [Yelpington Repo](yelpington_repo) project, please check <https://github.com/BurlingtonCodeAcademy/yelpington/pulls> and if any open PRs have your name on them, finish them up and get the PRs accepted or closed.
-* Otherwise, **clone** the Yelpington repository, either [from GitHub directly](https://github.com/BurlingtonCodeAcademy/yelpington), or from the GitHub Classroom link provided by your instructor.
-* Make sure your local setup is working. First run `npm install`, then run `npm start` and visit <http://localhost:8080/all.json> You should see something like this:
+Create a simple Express server so that:
 
-```javascript
-[
-  "kountry-kart-deli",
-  "american-flatbread",
-  "august-first",
-  "farmhouse-grill",
-  "pascolo-ristorante",
-  "el-cortijo",
-  "mr-mikes",
-  "ahli-babas-kabob",
-  "city-market",
-  "honey-road",
-  "hen-of-the-wood"
-]
-```
+**Given** the server is started with the command `npm start`
 
-**Hint**: you may want to install a [JSON Viewer Browser Extension](/lessons/javascript/json#anchor/viewing_json_in_browser) so the JSON is easier to read.
+**When** the user visits the homepage (http://localhost:8080)
 
-### Show Restaurant
+**Then** An HTML file should be served which displays the title:
+<h1>Yelpington!</h1>
+
+<!--/BOX-->
+
+<!--BOX-->
+
+## API endpoint: All restaurants
+
+**Given** the server is running
+
+**When** the user visits the route `/api`
+
+**Then** the user should see a list of all available restaurant IDs in JSON format
+
+<!--/BOX-->
+
+<!--BOX-->
+
+## API endpoint: Single Restaurants
+
+**Given** the server is running
+
+**When** the user visits the the route `/api/restaurant-id`
+
+**Then** the user should see the information of the restaurant whose ID was used in JSON format
+
+<!--/BOX-->
+
+<!--BOX-->
+
+## Home Page
+
+**Given** the server is running
+
+**When** the user visits the home page (e.g. `http://localhost:8080`)
+
+**Then** a leaflet map should be displayed, centered on downtown burlington.
+
+**And** there should be pins for each restaurant in the database.
+
+**And** a list of all restaurants in a nav bar
+
+<!--/BOX-->
+
+<!--BOX-->
+
+## Visit a restaurant page
+
+**Given** the user is on the homepage
+
+**When** they click on a pin *or* the restaurant's name in the nav bar
+
+**Then** the user should be redirected to a dedicated restaurant page.
+
+<!--/BOX-->
+
+<!--BOX-->
+
+## Show Restaurant
 
 **Given** the id of a single restaurant (e.g. `joes-diner`)
 
 **When** the user visits `http://localhost:8080/restaurant.html#joes-diner`
 
-**Then** they should see all the restaurant information, formatted and styled nicely
+**Then** they should see all the information for that restaurant formatted and styled nicely
 
-**NOTE: Use AJAX or Fetch to load the data.**
+>Note: Use AJAX/Fetch to load the data.
 
-> Note: the Fetch API [does not work well with the `file:///` URL scheme](https://github.com/github/fetch/pull/92).
-> That's why we've added a simple `node` static server to this repository.
-> Install it with `npm install` and run it with `npm start`
+<!--/BOX-->
 
-**Hint:** To access *the current page's path* -- to get from `http://localhost:8080/restaurant.html#joes-diner` to `joes-diner` -- review the [URLs and JavaScript](/lessons/client-side-coding/urls_and_javascript) lesson.
+<!--BOX-->
+
+**Hint:** To access *the current page's path* -- to get from `http://localhost:8080/restaurant#joes-diner` to `joes-diner` -- review the [URLs and JavaScript](/lessons/client-side-coding/urls_and_javascript) lesson.
 <details>
 <summary>
 Click here for a more detailed hint
@@ -116,8 +163,11 @@ let name = document.location.hash.slice(1)
 (`slice(1)` removes the `#` from the `hash` field of the `document.location` URL object.)
 </details>
 
+<!--/BOX-->
 
-### Show Restaurant Map
+<!--BOX-->
+
+## Show Restaurant Map
 
 **Given** the id of a restaurant (e.g. `joes-diner`)
 
@@ -125,8 +175,7 @@ let name = document.location.hash.slice(1)
 
 **Then** they see a [Leaflet web map](/lessons/client_side_coding/interactive_mapping), centered at that restaurant's location
 
-> You must decide *how* and *when* to look up the restaurant's `Latitude/Longitude`, and
-> whether to do it automatically or manually.
+> You must decide *how* and *when* to look up the restaurant's `Latitude/Longitude`, and whether to do it automatically or manually.
 
 > [Nominatim](https://nominatim.openstreetmap.org/) is a good option. Try the following:
 
@@ -138,43 +187,14 @@ let name = document.location.hash.slice(1)
 
 > 2. https://wiki.openstreetmap.org/wiki/Nominatim
 
-### Show All Restaurants (list)
+<!--/BOX-->
 
-**When** the user visits `http://localhost:8080/`
+<!--BOX-->
 
-**Then** the user sees all restaurants as a list with links to the respective restaurant pages
+## IceBox
 
-### Show All Restaurants (map)
+* Create a contact form to submit user comments to the restaurant page which will then be displayed on that page.
 
-**When** the user visits `http://localhost:8080/` with no query string
+* Use a database or local storage to get the comments to persist across sessions.
 
-**Then** the user sees all restaurants as "pins" on the embedded map
-
-**And** clicking on a pin visits that restaurant's page
-
-### Formatted Notes
-
-**Given** markdown-formatted text inside a `notes` item
-
-**Then** the page should render it *into HTML* before inserting it into the page
-
-#### Example:
-
-JSON:
-
-```
-"notes": ["##Mr Mikes\nThe pizza is **awesome** here!"]
-```
-
-HTML:
-
-```
-<h2>Mr Mikes</h2>
-<p>The pizza is <strong>awesome</strong> here!</p>
-```
-
-Result:
-
-## Mr Mikes
-
-The pizza is **awesome** here!
+<!--/BOX-->
