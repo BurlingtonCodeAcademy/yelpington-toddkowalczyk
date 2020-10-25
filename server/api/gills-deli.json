@@ -1,0 +1,13 @@
+{
+  "id": "gills-deli",
+  "name": "Gill's Deli",
+  "address": "68 Strongs Ave",
+  "phone number": "773-7414 ",
+  "hours": "9:00 am - 7:00 pm",
+  "latitude": "43.602410",
+  "longitude": "-72.974830",
+  "notes": [
+    "Since 1964, Gills has been making awesome sandwiches and grinders",
+    "Rolls and bread are baked fresh daily"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+    "id": "ramuntos",
+    "name": "Ramuntos Pizza",
+    "address": "102 Strongs Avenue",
+    "phone number": "747-9980",
+    "hours": "5:00 pm - 10:00 pm",
+    "latitude": "43.600980",
+    "longitude": "-72.973290",
+    "notes": [
+      "Hand tossed NY style pizza loaded with the fresh toppings of your choice",
+      "Every pizza is hand tossed and baked to order in a state of the art VT soapstone oven"
+    ]
+  }
