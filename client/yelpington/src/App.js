@@ -22,10 +22,6 @@ function App() {
       <div>
         <RestaurantList></RestaurantList>
       </div>
-  
-      <div id='city-map'>
-        <RestaurantMap></RestaurantMap>
-      </div>
 
     </div>
   );
