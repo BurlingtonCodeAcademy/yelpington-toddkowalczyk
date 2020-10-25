@@ -1,0 +1,25 @@
+main-wrapper {
+  display: flex;
+  width: 100vw;
+}
+
+map-container {
+  display: inline-block;
+  width: 20vw;
+}
+
+restaurant-list {
+  position: absolute;
+  top: 0;
+}
+
+restaurant-container {
+  display: inline-block;
+  width: 20vw;
+  height: 50vh;
+}
+
+.leaflet-container {
+  width: 40vw;
+  height: 40vw;
+}
