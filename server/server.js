@@ -13,26 +13,20 @@ app.get("/", (req, res) => {
     res.status(200).send("this is the restaurant API")
 })
 
-// Send back collection of restaurants
-app.get("/list/", (req, res) => {
-    createRestaurantListFile()
-    res.status(200).sendFile(path.resolve(`api/restaurant-list.json`))
-})
-
 // Send back list of restaurants
 app.get("/api/", (req, res) => {
     res.status(200).sendFile(path.resolve(`api/restaurant-list.json`))
+    console.log('Sent resturant list')
 })
 
 // Send back file based on restaurant that is selected
 app.get("/restaurant-id/:restaurantKey", (req, res) => {
     let restaurantKey = req.params.restaurantKey
     res.status(200).sendFile(path.resolve(`api/${restaurantKey}.json`))
+    console.log('Sent resturant info')
 })
 
 // Start server and console log out message that it is running
 app.listen(port, () => {
     console.log('Server is running! ' + port)
 })
-
-}  
