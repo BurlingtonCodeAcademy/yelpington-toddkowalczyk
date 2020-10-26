@@ -5,10 +5,12 @@ function Restaurant(props) {
     const [restaurantAddress, setRestaurantAddress] = useState(null);
     const [restaurantPhone, setRestaurantPhone] = useState(null);
     const [restaurantHours, setRestaurantHours] = useState(null);
+    const [restaurantNotes, setRestaurantNotes] = useState([]);
 
     // Retrieve the Restaurant based on the key selected
     useEffect(() => {
-        const fetchURL = 'http://localhost:8000/restaurant-id/' + props.url
+        const fetchURL = 'http://localhost:8000/restaurant-id/' + props.restaurantKey
+
         fetch(fetchURL)
             .then(res => res.json())
             .then(restaurant => {
@@ -16,6 +18,7 @@ function Restaurant(props) {
                 setRestaurantAddress(restaurant['address'])
                 setRestaurantPhone(restaurant['phone number'])
                 setRestaurantHours(restaurant['hours'])
+                setRestaurantNotes(restaurant['notes'])
             })
     }
     )
@@ -27,6 +30,7 @@ function Restaurant(props) {
             <p>{restaurantAddress}</p>
             <p>{restaurantPhone}</p>
             <p>{restaurantHours}</p>
+            <p>{restaurantNotes}</p>
         </div>
     );
 }

@@ -18,14 +18,13 @@ function RestaurantList(props) {
     const [restId, setRestId] = useState(null)
     const [mapMarkers, setMapMarkers] = useState(null)
    
-    let activeRestaurant = null;
-
     // read list of restaurant names to display
     // then call function to setup array so markers can be placed on map
     useEffect(() => {
 
         // Fetch the list of restaurants to display
         if (!restaurantList) {
+            console.log('calling API endpoint!')
             fetch(hostLocation + 'api')
                 .then((res) => res.json())
                 .then((data) => getLatLong(data))
@@ -38,16 +37,10 @@ function RestaurantList(props) {
     // Get list of restaurants and their respective lat/long
     // setup array so we can create map markers for each
     async function getLatLong(data) {
+        console.log('in getLatLongData')
 
         // array to hold lat/long data for map pins
         let  markerArray = []
-
-        // 
-        let marker = {
-            key: null,
-            lat: null,
-            long: null
-        }
 
         // set state variable with 
         setRestaurantList(data)
@@ -68,9 +61,6 @@ function RestaurantList(props) {
                                 restaurant['latitude'],
                                 restaurant['longitude']
                             ]}
-                            onClick={() => {
-                                showRestaurant(restaurant['name'])
-                              }}
                     />
                 )
 
@@ -103,7 +93,7 @@ return (
                     <p>...Loading</p>
                 )}
             {restId &&
-                <Restaurant url={restId}></Restaurant>}
+                <Restaurant restaurantKey={restId}></Restaurant>}
         </div>
 
         <div id="map-container">
