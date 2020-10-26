@@ -1,6 +1,5 @@
 import React from "react";
 import './App.css';
-import RestaurantMap from './components/RestaurantMap'
 import RestaurantList from './components/RestaurantList'
 
 // Makes adding CSS needed for leaflet much easier
@@ -9,7 +8,7 @@ import { Helmet } from 'react-helmet'
 function App() {
 
   return (
-    <div>
+    <div id="main-wrapper">
       <Helmet>
         <link
           rel="stylesheet"
@@ -19,7 +18,8 @@ function App() {
         />
       </Helmet>
 
-      <div>
+      <h1 id="title">Yelpington</h1>
+      <div id="restaurant-list">
         <RestaurantList></RestaurantList>
       </div>
 

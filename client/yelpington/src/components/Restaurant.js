@@ -22,7 +22,7 @@ function Restaurant(props) {
 
     // Return Restaurant Details so they render in App
     return (
-        <div id="restaurant">
+        <div id="restaurant-container">
             <h1>{restaurantName}</h1>
             <p>{restaurantAddress}</p>
             <p>{restaurantPhone}</p>

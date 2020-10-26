@@ -1,6 +1,7 @@
 import { Map, Marker, TileLayer } from "react-leaflet";
 import React, { useState, useEffect } from "react";
 import Restaurant from './Restaurant'
+import '../App.css';
 
 // set API location in global
 const hostLocation = 'http://localhost:8000/'
@@ -16,6 +17,8 @@ function RestaurantList(props) {
     const [restaurantList, setRestaurantList] = useState(null)
     const [restId, setRestId] = useState(null)
     const [mapMarkers, setMapMarkers] = useState(null)
+   
+    let activeRestaurant = null;
 
     // read list of restaurant names to display
     // then call function to setup array so markers can be placed on map
@@ -65,8 +68,8 @@ function RestaurantList(props) {
                                 restaurant['latitude'],
                                 restaurant['longitude']
                             ]}
-                            onClick={(evt) => {
-                                markerClicked(marker.key, evt);
+                            onClick={() => {
+                                showRestaurant(restaurant['name'])
                               }}
                     />
                 )
@@ -76,11 +79,6 @@ function RestaurantList(props) {
     // Update State with array of Marker info
     setMapMarkers(markerArray)
     return
-}
-
-//  If marker is clicked, show restaurant page
-function markerClicked(markerKey, evt) {
-    alert('clicked')
 }
 
 // If restaurant link is clicked, set restaurant ID
@@ -94,11 +92,11 @@ function showRestaurant(id, evt) {
 // And map with restaurant markers
 return (
     <div>
-        <div>
+        <div id="restaurant-list">
             {restaurantList ? (
                 restaurantList.map((id) => (
-                    <div>
-                        <a href={id} onClick={(evt) => showRestaurant(id, evt)}>{id}</a>
+                    <div id="restaurant-links">
+                        <a id="restaurant-link" href={id} onClick={(evt) => showRestaurant(id, evt)}>{id.replaceAll('-', ' ')}</a>
                     </div>
                 ))
             ) : (
@@ -108,8 +106,8 @@ return (
                 <Restaurant url={restId}></Restaurant>}
         </div>
 
-        <div>
-            <Map center={[mapLat, mapLong]} zoom={mapZoom} >
+        <div id="map-container">
+            <Map id="map" center={[mapLat, mapLong]} zoom={mapZoom} >
 
                 <TileLayer
                     attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
