@@ -1,4 +1,5 @@
 import { Map, Marker, TileLayer } from "react-leaflet";
+import AppMap from './AppMap.js'
 import React, { useState, useEffect } from "react";
 import Restaurant from './Restaurant'
 import '../App.css';
@@ -17,7 +18,7 @@ function RestaurantList(props) {
     const [restaurantList, setRestaurantList] = useState(null)
     const [restId, setRestId] = useState(null)
     const [mapMarkers, setMapMarkers] = useState(null)
-   
+
     // read list of restaurant names to display
     // then call function to setup array so markers can be placed on map
     useEffect(() => {
@@ -36,9 +37,9 @@ function RestaurantList(props) {
     // Get list of restaurants and their respective lat/long
     // setup an array so we can create map markers for each
     async function getLatLong(data) {
-    
+
         // array to hold lat/long data for map pins
-        let  markerArray = []
+        let markerArray = []
 
         // set state variable with list of restaurants
         setRestaurantList(data)
@@ -54,69 +55,57 @@ function RestaurantList(props) {
                 .then(restaurant => {
                     markerArray.push(
                         <Marker
-                            url={'/restaurant-id/'+restaurant['id']}
+                            url={'/restaurant-id/' + restaurant['id']}
                             onClick={() => showRestaurantDetails(restaurant['id'])}
                             position={[
                                 restaurant['latitude'],
                                 restaurant['longitude']
                             ]}
-                    />
-                )
+                        />
+                    )
 
-        })
+                })
+        }
+        // Update State with array of Marker info
+        setMapMarkers(markerArray)
     }
-    // Update State with array of Marker info
-    setMapMarkers(markerArray)
-}
 
-// Helper function so that if a user clicks on map marker, we show restaurant detail page
-function showRestaurantDetails(restaurantId) {
-    setRestId(restaurantId)
-    console.log('RestID = ', restId)
-}
+    // Helper function so that if a user clicks on map marker, we show restaurant detail page
+    function showRestaurantDetails(restaurantId) {
+        setRestId(restaurantId)
+        console.log('RestID = ', restId)
+    }
 
-// If restaurant link is clicked, set restaurant ID
-// This allows resturant details to be rendered when link is clicked
-function showRestaurant(id, evt) {
-    evt.preventDefault()
-    setRestId(id)
-}
+    // If restaurant link is clicked, set restaurant ID
+    // This allows resturant details to be rendered when link is clicked
+    function showRestaurant(id, evt) {
+        evt.preventDefault()
+        setRestId(id)
+    }
 
-// Render restaurant list as links
-// And map with restaurant markers
-return (
-    <div>
-        <div id="restaurant-list">
-            {restaurantList ? (
-                restaurantList.map((id) => (
-                    <div id="restaurant-links">
-                        <a id="restaurant-link" href={id} onClick={(evt) => showRestaurant(id, evt)}>{id.replaceAll('-', ' ')}</a>
-                    </div>
-                ))
-            ) : (
-                    <p>...Loading</p>
-                )}
-            {restId &&
-                <Restaurant restaurantKey={restId}></Restaurant>}
+    // Render restaurant list as links
+    // And map with restaurant markers
+    return (
+        <div>
+            <div id="restaurant-list">
+                {restaurantList ? (
+                    restaurantList.map((id) => (
+                        <div id="restaurant-links">
+                            <a id="restaurant-link" href={id} onClick={(evt) => showRestaurant(id, evt)}>{id.replaceAll('-', ' ')}</a>
+                        </div>
+                    ))
+                ) : (
+                        <p>...Loading</p>
+                    )}
+                {restId &&
+                    <Restaurant restaurantKey={restId}></Restaurant>}
+            </div>
+            <div>
+                <AppMap mapLat={mapLat} mapLong={mapLong} mapZoom={mapZoom} markers={mapMarkers}></AppMap>
+            </div>
         </div>
 
-        <div id="map-container">
-            <Map id="map" center={[mapLat, mapLong]} zoom={mapZoom} >
-
-                <TileLayer
-                    attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-
-                {
-                    mapMarkers
-                }
-
-            </Map>
-        </div>
-    </div>
-
-);
+    );
 };
 
 export default RestaurantList
