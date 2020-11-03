@@ -33,12 +33,17 @@ function Restaurant(props) {
 
     // Return Restaurant Details so it can be rendered in App
     return (
-        <div id="restaurant-container">
-            <h1>{restaurantName}</h1>
-            <p>{restaurantAddress}</p>
-            <p>{restaurantPhone}</p>
-            <p>{restaurantHours}</p>
-            <p>{restaurantNotes}</p>
+        <div>
+            <div id="restaurant-container">
+                <h1>{restaurantName}</h1>
+                <p>{restaurantAddress}</p>
+                <p>{restaurantPhone}</p>
+                <p>{restaurantHours}</p>
+                <p>{restaurantNotes}</p>
+            </div>
+            <div id="restaurant-map">
+                The map goes here
+            </div>
         </div>
     );
 }

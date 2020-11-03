@@ -79,8 +79,10 @@ function RestaurantList(props) {
     // If restaurant link is clicked, set restaurant ID
     // This allows resturant details to be rendered when link is clicked
     function showRestaurant(id, evt) {
+        console.log('in show restaurant')
+        props.setRestaurantId(id)
         evt.preventDefault()
-        setRestId(id)
+   //     setRestId(id)
     }
 
     // Render restaurant list as links
