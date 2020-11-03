@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './App.css';
 import RestaurantList from './components/RestaurantList'
 import Restaurant from './components/Restaurant'
@@ -7,6 +7,8 @@ import Restaurant from './components/Restaurant'
 import { Helmet } from 'react-helmet'
 
 function App() {
+
+  const [currentPage, setCurrentPage] = useState('Home')
 
   return (
     <div id="main-wrapper">
@@ -21,8 +23,10 @@ function App() {
 
       <h1 id="title">Yelpington</h1>
       <div id="restaurant-list">
-        <RestaurantList></RestaurantList>
-        <Restaurant></Restaurant>
+        {currentPage === 'Home' ?
+          <RestaurantList></RestaurantList>
+          :
+          <Restaurant></Restaurant>}
       </div>
 
     </div>
