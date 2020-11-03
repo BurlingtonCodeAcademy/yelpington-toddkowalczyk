@@ -1,6 +1,7 @@
 import React from "react";
 import './App.css';
 import RestaurantList from './components/RestaurantList'
+import Restaurant from './components/Restaurant'
 
 // Makes adding CSS needed for leaflet much easier
 import { Helmet } from 'react-helmet'
@@ -21,6 +22,7 @@ function App() {
       <h1 id="title">Yelpington</h1>
       <div id="restaurant-list">
         <RestaurantList></RestaurantList>
+        <Restaurant></Restaurant>
       </div>
 
     </div>

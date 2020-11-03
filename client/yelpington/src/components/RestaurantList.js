@@ -24,7 +24,6 @@ function RestaurantList(props) {
 
         // Fetch the list of restaurants to display
         if (!restaurantList) {
-            console.log('calling API endpoint!')
             fetch(hostLocation + 'api')
                 .then((res) => res.json())
                 .then((data) => getLatLong(data))
@@ -35,28 +34,28 @@ function RestaurantList(props) {
     })
 
     // Get list of restaurants and their respective lat/long
-    // setup array so we can create map markers for each
+    // setup an array so we can create map markers for each
     async function getLatLong(data) {
-        console.log('in getLatLongData')
-
+    
         // array to hold lat/long data for map pins
         let  markerArray = []
 
-        // set state variable with 
+        // set state variable with list of restaurants
         setRestaurantList(data)
 
-        // Read each restaurant Json file to obtain lat/long
+        // Read each restaurant's Json file and obtain lat/long
         for (const element of data) {
 
             const fetchURL = hostLocation + 'restaurant-id/' + element
 
-            // Read individual Json file and load up Marker array for each restaurant
+            // Read individual Json file and load up Marker array with each restaurant
             await fetch(fetchURL)
                 .then(res => res.json())
                 .then(restaurant => {
                     markerArray.push(
                         <Marker
-                            key={restaurant['name']}
+                            url={'/restaurant-id/'+restaurant['id']}
+                            onClick={() => showRestaurantDetails(restaurant['id'])}
                             position={[
                                 restaurant['latitude'],
                                 restaurant['longitude']
@@ -68,11 +67,16 @@ function RestaurantList(props) {
     }
     // Update State with array of Marker info
     setMapMarkers(markerArray)
-    return
+}
+
+// Helper function so that if a user clicks on map marker, we show restaurant detail page
+function showRestaurantDetails(restaurantId) {
+    setRestId(restaurantId)
+    console.log('RestID = ', restId)
 }
 
 // If restaurant link is clicked, set restaurant ID
-// This allows resturant details to be rendered on click of link
+// This allows resturant details to be rendered when link is clicked
 function showRestaurant(id, evt) {
     evt.preventDefault()
     setRestId(id)
@@ -109,9 +113,6 @@ return (
                 }
 
             </Map>
-
-
-
         </div>
     </div>
 

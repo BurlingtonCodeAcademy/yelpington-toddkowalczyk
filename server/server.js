@@ -16,14 +16,12 @@ app.get("/", (req, res) => {
 // Send back list of restaurants
 app.get("/api/", (req, res) => {
     res.status(200).sendFile(path.resolve(`api/restaurant-list.json`))
-    console.log('Sent resturant list')
 })
 
 // Send back file based on restaurant that is selected
 app.get("/restaurant-id/:restaurantKey", (req, res) => {
     let restaurantKey = req.params.restaurantKey
     res.status(200).sendFile(path.resolve(`api/${restaurantKey}.json`))
-    console.log('Sent resturant info')
 })
 
 // Start server and console log out message that it is running
