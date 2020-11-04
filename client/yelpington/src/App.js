@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet'
 function App() {
 
   const [restaurantId, setRestaurantId] = useState(null)
+  const [markers, setMarkers] = useState()
 
   // Render the App
   return (
@@ -25,9 +26,9 @@ function App() {
       <h1 id="title">Yelpington</h1>
       <div id="restaurant-list">
         {restaurantId === null ?
-          <RestaurantList setRestaurantId={setRestaurantId}></RestaurantList>
+          <RestaurantList setRestaurantId={setRestaurantId} setMarkers={setMarkers}></RestaurantList>
           :
-          <Restaurant restaurantKey={restaurantId}></Restaurant>}
+          <Restaurant restaurantKey={restaurantId} markers={markers}></Restaurant>}
       </div>
 
     </div>

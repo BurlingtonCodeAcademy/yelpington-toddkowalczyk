@@ -1,4 +1,4 @@
-import { Map, Marker, TileLayer } from "react-leaflet";
+import {Marker} from "react-leaflet";
 import AppMap from './AppMap.js'
 import React, { useState, useEffect } from "react";
 import Restaurant from './Restaurant'
@@ -7,7 +7,7 @@ import '../App.css';
 // set API location in global
 const hostLocation = 'http://localhost:8000/'
 
-// set default lat, long and zoom
+// set default lat, long and zoom in Rutland, VT
 const mapLat = '43.6106'
 const mapLong = '-72.9726'
 const mapZoom = '13'
@@ -63,7 +63,6 @@ function RestaurantList(props) {
                             ]}
                         />
                     )
-
                 })
         }
         // Update State with array of Marker info
@@ -72,17 +71,16 @@ function RestaurantList(props) {
 
     // Helper function so that if a user clicks on map marker, we show restaurant detail page
     function showRestaurantDetails(restaurantId) {
+        props.setRestaurantId(restaurantId)
         setRestId(restaurantId)
-        console.log('RestID = ', restId)
     }
 
     // If restaurant link is clicked, set restaurant ID
     // This allows resturant details to be rendered when link is clicked
     function showRestaurant(id, evt) {
-        console.log('in show restaurant')
         props.setRestaurantId(id)
         evt.preventDefault()
-   //     setRestId(id)
+        setRestId(id)
     }
 
     // Render restaurant list as links
@@ -99,8 +97,6 @@ function RestaurantList(props) {
                 ) : (
                         <p>...Loading</p>
                     )}
-                {restId &&
-                    <Restaurant restaurantKey={restId}></Restaurant>}
             </div>
             <div>
                 <AppMap mapLat={mapLat} mapLong={mapLong} mapZoom={mapZoom} markers={mapMarkers}></AppMap>

@@ -7,7 +7,7 @@ function AppMap(props) {
     // Render restaurant list as links
     // And map with the markers in the mapMarkers array
 
-    console.log(props.mapLat, props.mapLong, props.mapZoom)
+    console.log(props.mapLat, props.mapLong, props.mapZoom, props.markers)
     return (
         <div id="map-container">
             <Map id="map" center={[props.mapLat, props.mapLong]} zoom={props.mapZoom} >
