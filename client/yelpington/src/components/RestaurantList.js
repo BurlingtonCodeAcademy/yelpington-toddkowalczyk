@@ -1,7 +1,6 @@
 import {Marker} from "react-leaflet";
 import AppMap from './AppMap.js'
 import React, { useState, useEffect } from "react";
-import Restaurant from './Restaurant'
 import '../App.css';
 
 // set API location in global
