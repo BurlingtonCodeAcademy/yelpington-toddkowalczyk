@@ -24,7 +24,14 @@ app.get("/restaurant-id/:restaurantKey", (req, res) => {
     res.status(200).sendFile(path.resolve(`api/${restaurantKey}.json`))
 })
 
+// Navigate to specific page
+app.get("/restaurant.html/:restaurantKey", (req, res) => {
+    res.redirect("http://localhost:3000/")
+})
+
 // Start server and console log out message that it is running
 app.listen(port, () => {
     console.log('Server is running! ' + port)
 })
+
+
